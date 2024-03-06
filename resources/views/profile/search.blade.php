@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            社員一覧
+            検索結果
 
             <!-- フィルターボタン -->
             <button id="filterButton">フィルター</button>
@@ -107,7 +107,7 @@
             {{ session('message') }}
         </div>
     @endif
-    <body>
+
     <div class="mx-auto px-6">
         @foreach($users as $user)
             <div class="mt-4 text-lg font-semibold">
@@ -117,7 +117,7 @@
                             編集
                         </x-primary-button>
                     </a>
-                    <form method="post" action="{{route('profile.destroy', ['id'=>$user->id])}}" class="flex-2">
+                    <form method="post" action="{{route('profile.destroy', $user)}}" class="flex-2">
                         @csrf
                         @method('delete')
 
@@ -137,6 +137,8 @@
             </div>
         @endforeach
     </div>
+
+    {!! $users->render() !!}
 
     <script>
     // フィルターボタン要素を取得
@@ -165,6 +167,4 @@
     }
     }
     </script>
-    </body>
-    {!! $users->render() !!}
 </x-app-layout>

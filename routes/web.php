@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Auth\RegisterdController;
 use Illuminate\Support\Facades\Route;
 use App\Lib\MyFunction;
 
@@ -15,6 +16,9 @@ use App\Lib\MyFunction;
 |
 */
 
+Route::get('/logout', [Controller::class, 'logout'])->name('logout.info');
+Route::post('/logout', [Controller::class, 'logout'])->name('logout.info');
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -28,6 +32,8 @@ Route::get('/dashboard', function () {
 //Route::middleware('auth')->group(function () {
     Route::get('/profile/info/{id}', [ProfileController::class, 'info'])->name('profile.info');
     Route::post('/profile/info/{id}', [ProfileController::class, 'info'])->name('profile.info');
+    Route::get('/profile/search', [ProfileController::class, 'search'])->name('profile.search');
+    Route::post('/profile/search', [ProfileController::class, 'search'])->name('profile.search');
     Route::get('/profile/edit/{id}', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile/edit/{id}', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/profile/destroy/{id}', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -35,6 +41,7 @@ Route::get('/dashboard', function () {
 //});
 
 Route::get('/show',[Controller::class, 'show'])->name('show');
+Route::get('/activitylog',[Controller::class, 'showActivityLog'])->name('showActivityLog');
 
 Route::get('/register', function () { 
     return view('register', [MyFunction::class, 'yearSelect'])->name('register.yearSelect');
@@ -42,5 +49,5 @@ Route::get('/register', function () {
     return view('register', [MyFunction::class, 'daySelect'])->name('register.daySelect');
 });
 
-Route::resource('URI', ProfileController::class);
+//Route::resource('profile', ProfileController::class);
 require __DIR__.'/auth.php';
